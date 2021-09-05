@@ -6,6 +6,8 @@ import { FaCheckCircle } from "react-icons/fa";
 import styles from "../styles/Detail.module.css";
 import getAllSlugs from '../utils/getAllSlugs';
 import getCampaignBySlug from '../utils/getCampaignBySlug';
+import * as gtag from '../lib/gtag'
+
 
 function Campaign({ data }) {
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -32,6 +34,12 @@ function Campaign({ data }) {
             .then((res) => res.json())
             .then((response) => {
                 setIsSubmitted(true);
+
+                gtag.event({
+                    action: 'submit_form',
+                    category: 'Contact',
+                    label: email,
+                })
             })
             .catch((error) => console.log(`error`, error))
             .finally(() => {
